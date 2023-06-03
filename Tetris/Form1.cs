@@ -17,7 +17,7 @@ namespace Tetris
         public Form1()
         {
             InitializeComponent();
-            nextBlock();
+            nextTetromino();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,9 +41,14 @@ namespace Tetris
             {
                 moveDown();
             }
+
+            if(e.KeyCode == Keys.Space)
+            {
+                spaceDropTimer.Enabled = true;
+            }
         }
 
-        public void disableBlock()
+        public void disableTetromino()
         {
             foreach(Control c in mainPanel.Controls) 
             {
@@ -58,7 +63,7 @@ namespace Tetris
                 }
             }
 
-            nextBlock();
+            nextTetromino();
         }
 
         private void softDropTimer_Tick(object sender, EventArgs e)
@@ -69,49 +74,185 @@ namespace Tetris
             }
             else
             {
-                disableBlock();
+                disableTetromino();
             }
         }
 
-        public void createBlock(int x)
+        private void spaceDropTimer_Tick(object sender, EventArgs e)
         {
-            PictureBox blocks = new PictureBox();
-            var block = new PictureBox();
-            blocks = block;
-            block.Size = new Size(25,25);
-            block.BorderStyle = BorderStyle.FixedSingle;
-            block.Enabled = true;
-            block.Visible = true;
-            if(x == 0)
+            if (!borderDown())
             {
-                block.BackColor = Color.Red;
+                moveDown();
             }
-            else if(x == 1)
+            else
             {
-                block.BackColor = Color.Orange;
+                spaceDropTimer.Enabled = false;
             }
-            else if (x == 2)
+        }
+
+        public void createTetrominos(int x)
+        {
+            PictureBox[] tetrominos = new PictureBox[4];
+
+            for(int i=0; i<4; i++)
             {
-                block.BackColor = Color.Yellow;
+                var tetromino = new PictureBox();
+                tetrominos[i] = tetromino;
+                tetromino.Size = new Size(25, 25);
+                tetromino.BorderStyle = BorderStyle.FixedSingle;
+                tetromino.Enabled = true;
+                tetromino.Visible = true;
+                if (x == 0)
+                {
+                    tetromino.BackColor = Color.Red;
+
+                    if(i == 0)
+                    {
+                        tetromino.Location = new Point(75, -50);
+                    }
+                    else if(i==1)
+                    {
+                        tetromino.Location = new Point(100, -50);
+                    }
+                    else if(i== 2)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if(i == 3)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                }
+                else if (x == 1)
+                {
+                    tetromino.BackColor = Color.Orange;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(75, -25);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(125, -50);
+                    }
+                }
+                else if (x == 2)
+                {
+                    tetromino.BackColor = Color.Yellow;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(100, -50);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(125, -50);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                }
+                else if (x == 3)
+                {
+                    tetromino.BackColor = Color.Chartreuse;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(75, -25);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(100, -50);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(125, -50);
+                    }
+                }
+                else if (x == 4)
+                {
+                    tetromino.BackColor = Color.Cyan;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(75, -25);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(150, -25);
+                    }
+                }
+                else if (x == 5)
+                {
+                    tetromino.BackColor = Color.Blue;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(75, -25);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(75, -50);
+                    }
+                }
+                else if (x == 6)
+                {
+                    tetromino.BackColor = Color.Magenta;
+
+                    if (i == 0)
+                    {
+                        tetromino.Location = new Point(75, -25);
+                    }
+                    else if (i == 1)
+                    {
+                        tetromino.Location = new Point(100, -25);
+                    }
+                    else if (i == 2)
+                    {
+                        tetromino.Location = new Point(125, -25);
+                    }
+                    else if (i == 3)
+                    {
+                        tetromino.Location = new Point(100, -50);
+                    }
+                }
+                
+                mainPanel.Controls.Add(tetromino);
             }
-            else if (x == 3)
-            {
-                block.BackColor = Color.Green;
-            }
-            else if (x == 4)
-            {
-                block.BackColor = Color.Cyan;
-            }
-            else if (x == 5)
-            {
-                block.BackColor = Color.Blue;
-            }
-            else if (x == 6)
-            {
-                block.BackColor = Color.Purple;
-            }
-            block.Location = new Point(100,-25);
-            mainPanel.Controls.Add(block);
+            
         }
 
         public void moveRight()
@@ -313,11 +454,10 @@ namespace Tetris
         }
 
         
-        public void nextBlock()
+        public void nextTetromino()
         {
             int random = rand.Next(0,7);
-
-            createBlock(random);
+            createTetrominos(random);
         }
     }
 }

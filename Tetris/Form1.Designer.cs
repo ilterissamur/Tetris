@@ -31,6 +31,7 @@
             this.components = new System.ComponentModel.Container();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.softDropTimer = new System.Windows.Forms.Timer(this.components);
+            this.spaceDropTimer = new System.Windows.Forms.Timer(this.components);
             this.SuspendLayout();
             // 
             // mainPanel
@@ -47,11 +48,16 @@
             this.softDropTimer.Interval = 600;
             this.softDropTimer.Tick += new System.EventHandler(this.softDropTimer_Tick);
             // 
+            // spaceDropTimer
+            // 
+            this.spaceDropTimer.Interval = 5;
+            this.spaceDropTimer.Tick += new System.EventHandler(this.spaceDropTimer_Tick);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(250, 500);
+            this.ClientSize = new System.Drawing.Size(249, 500);
             this.Controls.Add(this.mainPanel);
             this.Name = "Form1";
             this.Text = "Tetris";
@@ -65,6 +71,7 @@
 
         private System.Windows.Forms.Panel mainPanel;
         private System.Windows.Forms.Timer softDropTimer;
+        private System.Windows.Forms.Timer spaceDropTimer;
     }
 }
 
