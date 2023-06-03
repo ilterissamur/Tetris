@@ -22,7 +22,7 @@ namespace Tetris
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
@@ -45,6 +45,11 @@ namespace Tetris
             if(e.KeyCode == Keys.Space)
             {
                 spaceDropTimer.Enabled = true;
+            }
+
+            if(e.KeyCode == Keys.Up)
+            {
+                rotateTetrominos();
             }
         }
 
@@ -458,6 +463,1477 @@ namespace Tetris
         {
             int random = rand.Next(0,7);
             createTetrominos(random);
+        }
+
+        public void rotateTetrominos()
+        {
+            int[,] blocksLocations = new int[4, 2];
+            int[,] turningLocations = new int[4, 2];
+            int counter = 0;
+
+            foreach (Control c in mainPanel.Controls)
+            {
+                if (c.GetType() == typeof(PictureBox))
+                {
+                    PictureBox pb = c as PictureBox;
+
+                    if (pb.Enabled)
+                    {
+                        blocksLocations[counter,0] = pb.Location.X;
+                        blocksLocations[counter, 1] = pb.Location.Y;
+                        counter++;
+                    }
+                }
+            }
+
+            int subX = blocksLocations[0, 0];
+            int subY = blocksLocations[0, 1];
+
+            for(int i=0; i < 4; i++) 
+            {
+                turningLocations[i, 0] = blocksLocations[i, 0] - subX;
+                turningLocations[i, 1] = blocksLocations[i, 1] - subY;
+            }
+
+            if (!rotationBorders(turningLocations, blocksLocations))
+            {
+                foreach (Control c in mainPanel.Controls)
+                {
+                    if (c.GetType() == typeof(PictureBox))
+                    {
+                        PictureBox pb = c as PictureBox;
+
+                        if (pb.Enabled)
+                        {
+                            //red tetromino
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
+                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top - 50;
+                                }
+
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
+                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == -50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top + 50;
+                                }
+                            }
+
+                            //orange tetromino
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                }
+                            }
+
+                            //green tetromino
+
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
+                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
+                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                }
+                            }
+
+                            //cyan tetromino
+
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == 75 && turningLocations[3, 1] == 0)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == 75)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 50;
+                                }
+                                else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                                {
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                    pb.Top = pb.Top - 25;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == -75 && turningLocations[3, 1] == 0)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    ;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == -75)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 50;
+                                }
+                                else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                                {
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                    pb.Top = pb.Top + 25;
+                                }
+                            }
+
+                            //blue tetromino
+
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 0)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top + 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 50;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 0)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Top = pb.Top - 50;
+                                }
+                            }
+
+                            //purple tetromino
+
+                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                            }
+                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -25)
+                            {
+                                if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                                {
+                                    pb.Left = pb.Left - 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top + 25;
+                                }
+                                else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                                {
+                                    pb.Left = pb.Left + 25;
+                                    pb.Top = pb.Top - 25;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        public bool rotationBorders(int[,] turningLocations, int[,] blocksLocations)
+        {
+            bool border = false;
+
+            foreach (Control c in mainPanel.Controls)
+            {
+                if (c.GetType() == typeof(PictureBox))
+                {
+                    PictureBox pb = c as PictureBox;
+
+                    if (pb.Enabled)
+                    {
+                        //red tetromino
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
+                        turningLocations[3, 0] == 50 && turningLocations[3, 1] == 25)
+                        {
+                            isLocLegal(pb, ref border, 25, -25);
+
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+                                
+                                if(border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == 50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
+                        turningLocations[3, 0] == -50 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == -50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        //orange tetromino
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        //green tetromino
+
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
+                        turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
+                        turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        //cyan tetromino
+
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == 75 && turningLocations[3, 1] == 0)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                        turningLocations[3, 0] == 0 && turningLocations[3, 1] == 75)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == -75 && turningLocations[3, 1] == 0)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -50, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                ;
+                                isLocLegal(pb, ref border, 0, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                        turningLocations[3, 0] == 0 && turningLocations[3, 1] == -75)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[1, 0] && pb.Location.Y == blocksLocations[1, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        //blue tetromino
+
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == 0 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == 0)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, 50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == 0 && turningLocations[3, 1] == 25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -50, 0);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == 0)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 0, -50);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+
+                        //purple tetromino
+
+                        if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
+                        turningLocations[3, 0] == 25 && turningLocations[3, 1] == 25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
+                        turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == 25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                        else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
+                        turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
+                        turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
+                        turningLocations[3, 0] == -25 && turningLocations[3, 1] == -25)
+                        {
+                            if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
+                            {
+                                isLocLegal(pb, ref border, -25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[2, 0] && pb.Location.Y == blocksLocations[2, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, 25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                            else if (pb.Location.X == blocksLocations[3, 0] && pb.Location.Y == blocksLocations[3, 1])
+                            {
+                                isLocLegal(pb, ref border, 25, -25);
+
+                                if (border)
+                                {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return border;
+        }
+
+        public void isLocLegal(PictureBox pb, ref bool border, int posX, int posY)
+        {
+            if(posX < 0)
+            {
+                if(pb.Left + posX <0)
+                {
+                    border = true;
+                }
+            }
+            else if(posX > 0)
+            {
+                if(pb.Left + posX > 225) 
+                {
+                    border = true;
+                }
+            }
+
+            if (posY > 0)
+            {
+                if (pb.Top + posY > 475)
+                {
+                    border = true;
+                }
+            }
+
+            if(!border)
+            {
+                foreach (Control i in mainPanel.Controls)
+                {
+                    if (i.GetType() == typeof(PictureBox))
+                    {
+                        PictureBox pbx = i as PictureBox;
+
+                        if (!pbx.Enabled && pb.Location.X == pbx.Location.X - posX && pb.Location.Y == pbx.Location.Y - posY)
+                        {
+                            border = true;
+                        }
+                    }
+                }
+            }
         }
     }
 }

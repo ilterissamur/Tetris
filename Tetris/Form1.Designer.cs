@@ -36,7 +36,7 @@
             // 
             // mainPanel
             // 
-            this.mainPanel.BackColor = System.Drawing.Color.Black;
+            this.mainPanel.BackColor = System.Drawing.Color.DimGray;
             this.mainPanel.Location = new System.Drawing.Point(0, 0);
             this.mainPanel.Name = "mainPanel";
             this.mainPanel.Size = new System.Drawing.Size(250, 500);
