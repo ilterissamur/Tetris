@@ -14,6 +14,11 @@ namespace Tetris
     {
         Random rand = new Random();
 
+        int lines = 0;
+        int level = 1;
+        int[] dropTimerIntervals = { 600, 600, 450, 300, 275, 250, 225, 200, 185, 170, 155, 140, 125, 110, 100, 90, 80, 70, 60, 50, 45, 40, 35, 30, 25, 25};
+        int score = 0;
+
         public Form1()
         {
             InitializeComponent();
@@ -40,6 +45,8 @@ namespace Tetris
             if(e.KeyCode == Keys.Down && !borderDown())
             {
                 moveDown();
+                score++;
+                scoreLabel.Text = score.ToString();
             }
 
             if(e.KeyCode == Keys.Space)
@@ -89,6 +96,8 @@ namespace Tetris
             if (!borderDown())
             {
                 moveDown();
+                score += 2;
+                scoreLabel.Text = score.ToString();
             }
             else
             {
@@ -1940,6 +1949,7 @@ namespace Tetris
         public void isRowFull()
         {
             int fullRowsCounter = 0;
+            int clearedLineCounter = 0;
 
             for(int i=0; i<20; i++)
             {
@@ -1983,10 +1993,55 @@ namespace Tetris
                             }
                         }
                     }
-                }
+                    clearedLineCounter++;
+                    lines++;
 
+                    if(lines % 5 == 0)
+                    {
+                        level++;
+                        levelLabel.Text = level.ToString();
+                        if (level < 26)
+                        {
+                            softDropTimer.Interval = dropTimerIntervals[level];
+                        }
+                        else
+                        {
+                            softDropTimer.Interval = 25;
+                        }
+                    }
+
+                    score = score + 100;
+                    scoreLabel.Text = score.ToString();
+                }
                 fullRowsCounter = 0;
             }
+
+            if(clearedLineCounter == 1)
+            {
+                score = score + 100;
+            }
+            else if(clearedLineCounter == 2)
+            {
+                score = score + 300;
+            }
+            else if(clearedLineCounter == 3)
+            {
+                score = score + 500;
+            }
+            else if (clearedLineCounter == 4) 
+            {
+                score = score + 800;
+            }
+        }
+
+        private void mainPanel_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        private void lineName_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
