@@ -46,7 +46,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Tetris.cs" />
+    <Compile Include="Tetris.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Tetris.Designer.cs">
       <DependentUpon>Tetris.cs</DependentUpon>
     </Compile>

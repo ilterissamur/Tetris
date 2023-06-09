@@ -468,7 +468,6 @@ namespace Tetris
 
                 mainPanel.Controls.Add(tetromino);
             }
-
         }
 
         public void nextTetromino()
@@ -490,7 +489,7 @@ namespace Tetris
         public void rotateTetrominos()
         {
             int[,] blocksLocations = new int[4, 2];
-            int[,] turningLocations = new int[4, 2];
+            int[,] locationToFirstBlock = new int[4, 2];
             int counter = 0;
 
 
@@ -509,16 +508,13 @@ namespace Tetris
                 }
             }
 
-            int subX = blocksLocations[0, 0];
-            int subY = blocksLocations[0, 1];
-
             for (int i = 0; i < 4; i++)
             {
-                turningLocations[i, 0] = blocksLocations[i, 0] - subX;
-                turningLocations[i, 1] = blocksLocations[i, 1] - subY;
+                locationToFirstBlock[i, 0] = blocksLocations[i, 0] - blocksLocations[0, 0];
+                locationToFirstBlock[i, 1] = blocksLocations[i, 1] - blocksLocations[0, 1];
             }
 
-            if (!rotationBorders(turningLocations, blocksLocations))
+            if (!rotationBorders(locationToFirstBlock, blocksLocations))
             {
                 foreach (Control c in mainPanel.Controls)
                 {
@@ -529,10 +525,10 @@ namespace Tetris
                         if (pb.Enabled && pb.Visible)
                         {
                             //red tetromino
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
-                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == 25)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 25 && locationToFirstBlock[2, 1] == 25 &&
+                            locationToFirstBlock[3, 0] == 50 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -549,10 +545,10 @@ namespace Tetris
                                     pb.Left = pb.Left - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == -25 && locationToFirstBlock[2, 1] == 25 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == 50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -570,10 +566,10 @@ namespace Tetris
                                 }
 
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
-                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == -25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -25 && locationToFirstBlock[2, 1] == -25 &&
+                            locationToFirstBlock[3, 0] == -50 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -590,10 +586,10 @@ namespace Tetris
                                     pb.Left = pb.Left + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == -50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == 25 && locationToFirstBlock[2, 1] == -25 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == -50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -612,10 +608,10 @@ namespace Tetris
                             }
 
                             //orange tetromino
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == 50 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -632,10 +628,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == 50 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == 50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -652,10 +648,10 @@ namespace Tetris
                                     pb.Left = pb.Left - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == -50 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -672,10 +668,10 @@ namespace Tetris
                                     pb.Top = pb.Top - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == -50 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == -50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -695,10 +691,10 @@ namespace Tetris
 
                             //green tetromino
 
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == -25 &&
-                            turningLocations[3, 0] == 50 && turningLocations[3, 1] == -25)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 25 && locationToFirstBlock[2, 1] == -25 &&
+                            locationToFirstBlock[3, 0] == 50 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -715,10 +711,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == 25 && turningLocations[2, 1] == 25 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == 25 && locationToFirstBlock[2, 1] == 25 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == 50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -735,10 +731,10 @@ namespace Tetris
                                     pb.Left = pb.Left - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == 25 &&
-                            turningLocations[3, 0] == -50 && turningLocations[3, 1] == 25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -25 && locationToFirstBlock[2, 1] == 25 &&
+                            locationToFirstBlock[3, 0] == -50 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -755,10 +751,10 @@ namespace Tetris
                                     pb.Top = pb.Top - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == -25 && turningLocations[2, 1] == -25 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -50)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == -25 && locationToFirstBlock[2, 1] == -25 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == -50)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -778,10 +774,10 @@ namespace Tetris
 
                             //cyan tetromino
 
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == 75 && turningLocations[3, 1] == 0)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == 75 && locationToFirstBlock[3, 1] == 0)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -802,10 +798,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
-                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == 75)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == 50 &&
+                            locationToFirstBlock[3, 0] == 0 && locationToFirstBlock[3, 1] == 75)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -826,10 +822,10 @@ namespace Tetris
                                     pb.Top = pb.Top - 25;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == -75 && turningLocations[3, 1] == 0)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == -75 && locationToFirstBlock[3, 1] == 0)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -851,10 +847,10 @@ namespace Tetris
                                     pb.Top = pb.Top - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
-                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == -75)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == -50 &&
+                            locationToFirstBlock[3, 0] == 0 && locationToFirstBlock[3, 1] == -75)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -878,10 +874,10 @@ namespace Tetris
 
                             //blue tetromino
 
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == -25)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == 0 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -898,10 +894,10 @@ namespace Tetris
                                     pb.Left = pb.Left + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 0)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == 50 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == 0)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -918,10 +914,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == 0 && turningLocations[3, 1] == 25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == 0 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -938,10 +934,10 @@ namespace Tetris
                                     pb.Left = pb.Left - 50;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 0)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == -50 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == 0)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -961,10 +957,10 @@ namespace Tetris
 
                             //purple tetromino
 
-                            if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == 50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == -25)
+                            if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == 50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -982,10 +978,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 25;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == 25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == 50 &&
-                            turningLocations[3, 0] == 25 && turningLocations[3, 1] == 25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == 25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == 50 &&
+                            locationToFirstBlock[3, 0] == 25 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -1003,10 +999,10 @@ namespace Tetris
                                     pb.Top = pb.Top + 25;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == -25 && turningLocations[1, 1] == 0 &&
-                            turningLocations[2, 0] == -50 && turningLocations[2, 1] == 0 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == 25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == -25 && locationToFirstBlock[1, 1] == 0 &&
+                            locationToFirstBlock[2, 0] == -50 && locationToFirstBlock[2, 1] == 0 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == 25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
@@ -1024,10 +1020,10 @@ namespace Tetris
                                     pb.Top = pb.Top - 25;
                                 }
                             }
-                            else if (turningLocations[0, 0] == 0 && turningLocations[0, 1] == 0 &&
-                            turningLocations[1, 0] == 0 && turningLocations[1, 1] == -25 &&
-                            turningLocations[2, 0] == 0 && turningLocations[2, 1] == -50 &&
-                            turningLocations[3, 0] == -25 && turningLocations[3, 1] == -25)
+                            else if (locationToFirstBlock[0, 0] == 0 && locationToFirstBlock[0, 1] == 0 &&
+                            locationToFirstBlock[1, 0] == 0 && locationToFirstBlock[1, 1] == -25 &&
+                            locationToFirstBlock[2, 0] == 0 && locationToFirstBlock[2, 1] == -50 &&
+                            locationToFirstBlock[3, 0] == -25 && locationToFirstBlock[3, 1] == -25)
                             {
                                 if (pb.Location.X == blocksLocations[0, 0] && pb.Location.Y == blocksLocations[0, 1])
                                 {
