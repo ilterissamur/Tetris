@@ -48,7 +48,7 @@
 </div>
 
 <h3>Contact<h3>
-<table width="100%">
+<table align="center" width="100%">
    <tr>
       <td align="center">
          <a href="https://github.com/ilterissamur"><img src="https://avatars.githubusercontent.com/u/96887142?v=4" width="45%"></a><br>
