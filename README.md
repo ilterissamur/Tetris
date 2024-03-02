@@ -62,14 +62,14 @@
 </table>
 
 
-[contributors-shield]: https://img.shields.io/github/contributors/ilterissamur/Credit-Score-Prediction.svg?style=for-the-badge
-[forks-shield]: https://img.shields.io/github/forks/ilterissamur/Credit-Score-Prediction.svg?style=for-the-badge
-[stars-shield]: https://img.shields.io/github/stars/ilterissamur/Credit-Score-Prediction.svg?style=for-the-badge
-[issues-shield]: https://img.shields.io/github/issues/ilterissamur/Credit-Score-Prediction.svg?style=for-the-badge
+[contributors-shield]: https://img.shields.io/github/contributors/ilterissamur/Tetris.svg?style=for-the-badge
+[forks-shield]: https://img.shields.io/github/forks/ilterissamur/Tetris.svg?style=for-the-badge
+[stars-shield]: https://img.shields.io/github/stars/ilterissamur/Tetris.svg?style=for-the-badge
+[issues-shield]: https://img.shields.io/github/issues/ilterissamur/Tetris.svg?style=for-the-badge
 
 <!-- Links -->
 
-[contributors-url]: https://github.com/ilterissamur/Credit-Score-Prediction/graphs/contributors
-[forks-url]: https://github.com/ilterissamur/Credit-Score-Prediction/network/members
-[stars-url]: https://github.com/ilterissamur/Credit-Score-Prediction/stargazers
-[issues-url]: https://github.com/ilterissamur/Credit-Score-Prediction/issues
+[contributors-url]: https://github.com/ilterissamur/Tetris/graphs/contributors
+[forks-url]: https://github.com/ilterissamur/Tetris/network/members
+[stars-url]: https://github.com/ilterissamur/Tetris/stargazers
+[issues-url]: https://github.com/ilterissamur/Tetris/issues
